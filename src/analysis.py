@@ -147,6 +147,9 @@ class SlabThicknessTask(FiretaskBase):
     
     def run_task(self, fw_spec):
         
+        # Units
+        Ev2Joule = 16.0219  # eV/Angs2 to J/m2
+        
         # DB
         db_file = env_chk(self.get("db_file"), fw_spec)
         to_db = self.get("to_db", True)
@@ -158,21 +161,94 @@ class SlabThicknessTask(FiretaskBase):
         mmdb = VaspCalcDb.from_db_file(db_file, admin=True)
         
         # Collection and find documents
-        d = mmdb.collection_find_one({"task_label": {"$regex": "*.oriented_bulk"}})
-        docs = mmdb.collection.find({"task_label": {"$regex": ".*slab_thickness_*"}})
+        d = mmdb.collection.find_one({"task_label": "oriented_bulk"})
+        docs = mmdb.collection.find({"task_label": {"$regex": "slab_thickness_*"}})
         
         # Get energy and structure from oriented bulk
         oriented_bulk = Structure.from_dict(d["calcs_reversed"][-1]["output"]["structure"])
         oriented_bulk_energy = d["calcs_reversed"][-1]["output"]["energy"]
-        print("bulk: ", oriented_bulk_energy)
+        bulk_comp = oriented_bulk.composition.as_dict()
         
         # Get the data dft energy and structure
+        thickness_dict = {}
         for n, doc in enumerate(docs):
+            # Get layer from task_label
             task_label = doc["task_label"]
-            print(task_label)
+            thickness = task_label.split("_")[2]
+            
+            # Structure and DFT energy
             struct = Structure.from_dict(doc["calcs_reversed"][-1]["output"]["structure"])
             dft_energy = doc["calcs_reversed"][-1]["output"]["energy"]
-            print("slab: ", dft_energy)
             
+            # Re-build slab object
+            slab_obj = Slab(
+                        struct.lattice,
+                        struct.species,
+                        struct.frac_coords,
+                        miller_index=[1,1,1],
+                        oriented_unit_cell=oriented_bulk,
+                        shift=0,
+                        scale_factor=0,
+                        energy=dft_energy)
+            
+            thickness_dict.update({str(thickness): slab_obj.as_dict()})
+            
+        print(thickness_dict.keys())
+            
+        # Append all slab_obj dict into summary_dict
+        summary_dict["slab_objs"] = thickness_dict
+        
+        # Calc. surface energy for each thickness
+        surface_energy_ev, surface_energy_j = {}, {}
+        
+        for layers, slab_obj in thickness_dict.items():
+            # slab_obj as object
+            slab_obj = Slab.from_dict(slab_obj)
+            
+            # slab_bulk_ratio
+            slab_comp = slab_obj.composition.as_dict()
+            slab_bulk_ratio = sum(slab_comp.values()) / sum(bulk_comp.values())
+            
+            # Surface energy eV/angs2
+            gamma_ev = self.get_surface_energy(slab_obj.energy, 
+                                              oriented_bulk_energy,
+                                              slab_bulk_ratio,
+                                              slab_obj.surface_area)
+            
+            gamma_j = round(gamma_ev * Ev2Joule, 4)
+            
+            # Append to dict
+            surface_energy_ev.update({str(layers): round(gamma_ev, 4)})
+            surface_energy_j.update({str(layers): gamma_j})
+            
+        # Append to summary dict
+        summary_dict["gamma_ev"] = surface_energy_ev
+        summary_dict["gamma_j"] = surface_energy_j
+        
+        # Add results to DB
+        if to_db:
+            mmdb.collection = mmdb.db["thickness"]
+            mmdb.collection.insert_one(summary_dict)
+            
+        # Plot
+        fig = plt.figure(figsize=(8,8))
+        
+        plt.xlabel("Number of Layers")
+        plt.ylabel("Surface Energy [J/m2]")
+        
+        n_layers = [int(i) for i in surface_energy_j.keys()]
+        plt.xticks(n_layers)
+        
+        plt.scatter(n_layers, surface_energy_j.values(), maker="s", color="black")
+        
+        plt.savefig("Pt_111_thickness.png", dpi=100, facecolor="white", transparent=False)
+        
+        # Logger
+        logger.info("Thickness Calibration Completed!")
         
         return
+            
+    def get_surface_energy(self, slab_E, oriented_E, slab_bulk_ratio, slab_area):
+        """Get the surface energy"""
+        gamma_hkl = (slab_E - (slab_bulk_ratio * oriented_E)) / (2 * slab_area)
+        return gamma_hkl
