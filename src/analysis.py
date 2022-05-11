@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 # PMG
 import pymatgen
 from pymatgen.core.structure import Structure
+from pymatgen.core.surface import Slab
 from pymatgen.analysis.eos import EOS
 
 # FireWorks and Atomate
@@ -153,19 +154,25 @@ class SlabThicknessTask(FiretaskBase):
         # Summary Dict
         summary_dict = {}
         
-        
         # Connect to the DB
         mmdb = VaspCalcDb.from_db_file(db_file, admin=True)
         
         # Collection and find documents
+        d = mmdb.collection_find_one({"task_label": {"$regex": "*.oriented_bulk"}})
         docs = mmdb.collection.find({"task_label": {"$regex": ".*slab_thickness_*"}})
+        
+        # Get energy and structure from oriented bulk
+        oriented_bulk = Structure.from_dict(d["calcs_reversed"][-1]["output"]["structure"])
+        oriented_bulk_energy = d["calcs_reversed"][-1]["output"]["energy"]
+        print("bulk: ", oriented_bulk_energy)
         
         # Get the data dft energy and structure
         for n, doc in enumerate(docs):
+            task_label = doc["task_label"]
+            print(task_label)
             struct = Structure.from_dict(doc["calcs_reversed"][-1]["output"]["structure"])
             dft_energy = doc["calcs_reversed"][-1]["output"]["energy"]
+            print("slab: ", dft_energy)
             
-        
-        
         
         return
