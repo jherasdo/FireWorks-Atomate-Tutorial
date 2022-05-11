@@ -1,0 +1,7 @@
+name: atomate_stack
+category: ''
+query: '{}'
+env:
+    db_file: /home/jovyan/atomate/config/db.json
+    vasp_cmd: mpirun -np 16 -map-by hwthread /opt/vasp.6.2.0_pgi_mkl/bin/vasp_std
+    scratch_dir: /scratch

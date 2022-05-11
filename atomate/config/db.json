@@ -1,0 +1,6 @@
+{
+    "host": "mongodb://localhost",
+    "port": 27017,
+    "database": "fireworks",
+    "collection": "tasks"
+}
