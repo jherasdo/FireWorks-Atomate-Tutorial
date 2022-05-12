@@ -239,7 +239,7 @@ class SlabThicknessTask(FiretaskBase):
         n_layers = [int(i) for i in surface_energy_j.keys()]
         plt.xticks(n_layers)
         
-        plt.scatter(n_layers, surface_energy_j.values(), maker="s", color="black")
+        plt.scatter(n_layers, surface_energy_j.values(), marker="s", color="black")
         
         plt.savefig("Pt_111_thickness.png", dpi=100, facecolor="white", transparent=False)
         
