@@ -72,4 +72,4 @@ class TheoreticalLevelSet(MVLSlabSet):
             return Kpoints.gamma_automatic((8,8,8))
         
         else:
-            return Kpoints.gamma_automatic((2,2,1))
+            return Kpoints.gamma_automatic((1,1,1))

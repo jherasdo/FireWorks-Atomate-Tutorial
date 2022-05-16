@@ -360,6 +360,7 @@ class AdsoptionEnergyTask(FiretaskBase):
 
             
     def get_adsorption_energy(self, slab_ads_e, slab_clean_e, adsorbate_e):
+        """Get the adsorption energy given slab_ads, slab_clean and adsorbate DFT energy"""
         
         e_ads = (slab_ads_e - slab_clean_e - adsorbate_e)
         
