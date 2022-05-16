@@ -193,8 +193,6 @@ class SlabThicknessTask(FiretaskBase):
             
             thickness_dict.update({str(thickness): slab_obj.as_dict()})
             
-        print(thickness_dict.keys())
-            
         # Append all slab_obj dict into summary_dict
         summary_dict["slab_objs"] = thickness_dict
         
@@ -252,3 +250,117 @@ class SlabThicknessTask(FiretaskBase):
         """Get the surface energy"""
         gamma_hkl = (slab_E - (slab_bulk_ratio * oriented_E)) / (2 * slab_area)
         return gamma_hkl
+    
+    
+    
+@explicit_serialize
+class AdsoptionEnergyTask(FiretaskBase):
+    
+    _fw_name = "Adsorption Energy Task"
+    
+    required_params = ["thickness", "db_file"]
+    optional_params = ["to_db"]
+    
+    def run_task(self, fw_spec):
+        
+        # DB
+        db_file = env_chk(self.get("db_file"), fw_spec)
+        to_db = self.get("to_db", True)
+        
+        # Thickness
+        slab_thickness = self["thickness"]
+        
+        # Summary Dict
+        summary_dict = {}
+        
+        # Connect to the DB
+        mmdb = VaspCalcDb.from_db_file(db_file, admin=True)
+        
+        # Collection and find documents
+        doc_ads_box = mmdb.collection.find_one({"task_label": "adsorbate_box"})
+        
+        doc_oriented_bulk = mmdb.collection.find_one({"task_label": "oriented_bulk"})
+        docs = mmdb.collection.find({"task_label": {"$regex": "slab_ads_*"}})
+        
+        # Adsorbate in box structure and DFT energy
+        ads_box_struct = Structure.from_dict(doc_ads_box["calcs_reversed"][-1]["output"]["structure"])
+        ads_box_energy = doc_ads_box["calcs_reversed"][-1]["output"]["energy"]
+        
+        summary_dict["ads_box_struct"] = ads_box_struct.as_dict()
+        summary_dict["ads_box_energy"] = ads_box_energy
+        
+        # We need the oriented bulk to re-build the slab object
+        oriented_bulk = Structure.from_dict(doc_oriented_bulk["calcs_reversed"][-1]["output"]["structure"])
+        
+        # We also need the clean surface with the right thickness
+        thick_collection = mmdb.db["thickness"]
+        thick_doc = thick_collection.find({})[0]
+        
+        slab_clean_dict = thick_doc["slab_objs"]
+        slab_clean = Slab.from_dict(slab_clean_dict[str(slab_thickness)])
+        
+        
+        # Slab_ads structures and energies
+        slab_ads_dict = {}
+        for n, doc in enumerate(docs):
+            # Get ads_label from task_label
+            task_label = doc["task_label"]
+            ads_label = task_label.split("_")[2]
+            
+            # Struct and DFT energy
+            struct = Structure.from_dict(doc["calcs_reversed"][-1]["output"]["structure"])
+            dft_energy = doc["calcs_reversed"][-1]["output"]["structure"]
+            
+            # Slab_obj
+            slab_obj = Slab(
+                        struct.lattice,
+                        struct.species,
+                        struct.frac_coords,
+                        miller_index=[1,1,1],
+                        oriented_unit_cell=oriented_bulk,
+                        shift=0,
+                        scale_factor=0,
+                        energy=dft_energy)
+            
+            # Append to slab_ads_dict
+            slab_ads_dict.update({str(ads_label): slab_obj.as_dict()})
+            
+        # Append to summary dict
+        summary_dict["slab_ads"] = slab_ads_dict
+        
+        # Adsorption energies
+        e_ads_dict = {}
+        for label, slab_ads in slab_ads_dict.items():
+            # slab_ads as object
+            slab_ads = Slab.from_dict(slab_ads)
+            
+            # Adsorption energy
+            e_ads = self.get_adsorption_energy(slab_ads.energy, slab_clean.energy, ads_box_energy)
+            
+            # Append to dict
+            e_ads_dict.update({str(label): e_ads})
+            
+            # Logger
+            logger.info(f"Adsorption energy at {label} site: {e_ads} [eV]")
+            
+        # Append to summary dict
+        summary_dict["e_ads"] = e_ads_dict
+            
+        
+        # Add results to DB
+        if to_db:
+            mmdb.collection = mmdb.db["E_ads"]
+            mmdb.collection.insert_one(summary_dict)
+            
+            
+        # Logger
+        logger.info("Adsorption Energy Analysis Completed!")
+        
+        return
+
+            
+    def get_adsorption_energy(self, slab_ads_e, slab_clean_e, adsorbate_e):
+        
+        e_ads = (slab_ads_e - slab_clean_e - adsorbate_e)
+        
+        return e_ads

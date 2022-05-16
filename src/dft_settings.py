@@ -45,7 +45,7 @@ class TheoreticalLevelSet(MVLSlabSet):
             "EDIFF": 0.1e-03,
             "ISPIN": 1,
             "IBRION": 2,
-            "NSW": 200,
+            "NSW": 300,
             "ISIF": 0,
             "ISYM": 0,
             "SYMPREC": 1e-6,
