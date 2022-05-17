@@ -5,6 +5,7 @@ import numpy as np
 import pymatgen
 from pymatgen.io.vasp.sets import MVLSlabSet
 from pymatgen.io.vasp.inputs import Kpoints
+from pymatgen.analysis.adsorption import AdsorbateSiteFinder
 
 
 # Create the DFT Theoretical level
@@ -48,7 +49,7 @@ class TheoreticalLevelSet(MVLSlabSet):
             "NSW": 300,
             "ISIF": 0,
             "ISYM": 0,
-            "SYMPREC": 1e-6,
+            "SYMPREC": 1e-5,
             "LWAVE": False,
             "LASPH": False,
             "LVTOT": False,
@@ -66,10 +67,36 @@ class TheoreticalLevelSet(MVLSlabSet):
     
     @property
     def kpoints(self):
-        abc = np.array(self.structure.lattice.abc)
         
         if self.bulk:
-            return Kpoints.gamma_automatic((8,8,8))
-        
+            kpts = Kpoints.gamma_automatic((8,8,8))
+            if self.user_kpoints_settings:
+                kpts = self.user_kpoints_settings
+                return kpts
         else:
-            return Kpoints.gamma_automatic((1,1,1))
+            kpts = Kpoints.gamma_automatic((2,2,1))
+            return kpts
+        
+        
+# Selective dynamics
+class SelectiveDynamics(AdsorbateSiteFinder):
+    """
+    Different methods for Selective Dynamics.
+    """
+
+    def __init__(self, slab):
+        self.slab = slab.copy()
+
+    @classmethod
+    def center_of_mass(cls, slab):
+        """Method based of center of mass."""
+        sd_list = []
+        sd_list = [
+            [False, False, False]
+            if site.frac_coords[2] < slab.center_of_mass[2]
+            else [True, True, True]
+            for site in slab.sites
+        ]
+        new_sp = slab.site_properties
+        new_sp["selective_dynamics"] = sd_list
+        return slab.copy(site_properties=new_sp)

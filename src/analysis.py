@@ -254,7 +254,7 @@ class SlabThicknessTask(FiretaskBase):
     
     
 @explicit_serialize
-class AdsoptionEnergyTask(FiretaskBase):
+class AdsorptionEnergyTask(FiretaskBase):
     
     _fw_name = "Adsorption Energy Task"
     
