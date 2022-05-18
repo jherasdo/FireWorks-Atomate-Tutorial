@@ -46,7 +46,9 @@ class PlotEncutCalib(FiretaskBase):
         # Loop over static calculations to get DFT Energy
         encuts, energies = [], []
         for n, doc in enumerate(docs):
-            encut = doc["orig_inputs"]["incar"]["ENCUT"]
+            task_label = doc["task_label"]
+            encut = float(task_label.split("-")[1])
+            #encut = doc["orig_inputs"]["incar"]["ENCUT"]
             dft_energy = doc["calcs_reversed"][-1]["output"]["energy"]
             encuts.append(encut)
             energies.append(dft_energy)
@@ -309,7 +311,7 @@ class AdsorptionEnergyTask(FiretaskBase):
             
             # Struct and DFT energy
             struct = Structure.from_dict(doc["calcs_reversed"][-1]["output"]["structure"])
-            dft_energy = doc["calcs_reversed"][-1]["output"]["structure"]
+            dft_energy = doc["calcs_reversed"][-1]["output"]["energy"]
             
             # Slab_obj
             slab_obj = Slab(
