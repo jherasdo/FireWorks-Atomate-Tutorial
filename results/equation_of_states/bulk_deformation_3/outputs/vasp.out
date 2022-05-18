@@ -1,0 +1,49 @@
+ running on   16 total cores
+ distrk:  each k-point on   16 cores,    1 groups
+ distr:  one band on    4 cores,    4 groups
+ vasp.6.2.0 18Jan21 (build Feb  1 2022 01:28:57) complex                         
+ POSCAR found type information on POSCAR Pt
+ POSCAR found :  1 types and       1 ions
+ scaLAPACK will be used
+ -----------------------------------------------------------------------------
+|                                                                             |
+|               ----> ADVICE to this user running VASP <----                  |
+|                                                                             |
+|     You enforced a specific xc type in the INCAR file but a different       |
+|     type was found in the POTCAR file.                                      |
+|     I HOPE YOU KNOW WHAT YOU ARE DOING!                                     |
+|                                                                             |
+ -----------------------------------------------------------------------------
+
+ LDA part: xc-table for Pade appr. of Perdew
+ -----------------------------------------------------------------------------
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|     The requested file  could not be found or opened for reading            |
+|     k-point information. Automatic k-point generation is used as a          |
+|     fallback, which may lead to unwanted results.                           |
+|                                                                             |
+ -----------------------------------------------------------------------------
+
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ...
+ WAVECAR not read
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.358003922101E+02    0.35800E+02   -0.46787E+03  2816   0.649E+02
+DAV:   2    -0.505333635286E+01   -0.40854E+02   -0.39011E+02  3216   0.158E+02
+DAV:   3    -0.557732531024E+01   -0.52399E+00   -0.52311E+00  3284   0.167E+01
+DAV:   4    -0.557920499457E+01   -0.18797E-02   -0.18796E-02  3336   0.118E+00
+DAV:   5    -0.557921793491E+01   -0.12940E-04   -0.12939E-04  3444   0.875E-02    0.171E+01
+DAV:   6    -0.530749831697E+01    0.27172E+00   -0.42519E-01  3108   0.526E+00    0.924E+00
+DAV:   7    -0.525354731108E+01    0.53951E-01   -0.16994E-01  3320   0.328E+00    0.224E+00
+DAV:   8    -0.524974948648E+01    0.37978E-02   -0.93990E-03  2988   0.821E-01    0.562E-01
+DAV:   9    -0.524955169496E+01    0.19779E-03   -0.14296E-04  3204   0.104E-01    0.354E-02
+DAV:  10    -0.524955782139E+01   -0.61264E-05   -0.50036E-06  1828   0.171E-02
+   1 F= -.52495578E+01 E0= -.52487006E+01  d E =-.171451E-02

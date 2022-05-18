@@ -1,0 +1,34 @@
+ running on   16 total cores
+ distrk:  each k-point on   16 cores,    1 groups
+ distr:  one band on    4 cores,    4 groups
+ vasp.6.2.0 18Jan21 (build Feb  1 2022 01:28:57) complex                         
+ POSCAR found type information on POSCAR Pt
+ POSCAR found :  1 types and       1 ions
+ scaLAPACK will be used
+ -----------------------------------------------------------------------------
+|                                                                             |
+|               ----> ADVICE to this user running VASP <----                  |
+|                                                                             |
+|     You enforced a specific xc type in the INCAR file but a different       |
+|     type was found in the POTCAR file.                                      |
+|     I HOPE YOU KNOW WHAT YOU ARE DOING!                                     |
+|                                                                             |
+ -----------------------------------------------------------------------------
+
+ LDA part: xc-table for Pade appr. of Perdew
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ FFT: planning ...
+ WAVECAR not read
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1     0.324362422894E+02    0.32436E+02   -0.44727E+03  6708   0.613E+02
+DAV:   2    -0.529512727371E+01   -0.37731E+02   -0.36147E+02  7524   0.149E+02
+DAV:   3    -0.576169894576E+01   -0.46657E+00   -0.46393E+00  7680   0.152E+01
+DAV:   4    -0.576359023554E+01   -0.18913E-02   -0.18912E-02  7600   0.115E+00
+DAV:   5    -0.576360540369E+01   -0.15168E-04   -0.15167E-04  7780   0.922E-02    0.126E+01
+DAV:   6    -0.545458435234E+01    0.30902E+00   -0.61237E-01  6784   0.605E+00    0.678E+00
+DAV:   7    -0.541410677446E+01    0.40478E-01   -0.14747E-01  7412   0.293E+00    0.242E+00
+DAV:   8    -0.541112310162E+01    0.29837E-02   -0.66227E-03  6912   0.644E-01    0.628E-01
+DAV:   9    -0.541086930805E+01    0.25379E-03   -0.16960E-04  7176   0.106E-01    0.707E-02
+DAV:  10    -0.541087089439E+01   -0.15863E-05   -0.64081E-06  3496   0.205E-02
+   1 F= -.54108709E+01 E0= -.54094595E+01  d E =-.282288E-02

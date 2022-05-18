@@ -1,0 +1,202 @@
+{
+    "spec": {
+        "_tasks": [
+            {
+                "structure": {
+                    "@module": "pymatgen.core.structure",
+                    "@class": "Structure",
+                    "charge": null,
+                    "lattice": {
+                        "matrix": [
+                            [
+                                2.4025207811323877,
+                                0.0,
+                                1.3870960208386385
+                            ],
+                            [
+                                0.8008402611844416,
+                                2.265118313727989,
+                                1.387096022515914
+                            ],
+                            [
+                                0.0,
+                                0.0,
+                                2.77419203
+                            ]
+                        ],
+                        "a": 2.77419204,
+                        "b": 2.77419204,
+                        "c": 2.77419203,
+                        "alpha": 59.99999994,
+                        "beta": 59.99999997999999,
+                        "gamma": 59.99999995000001,
+                        "volume": 15.097135884015637
+                    },
+                    "sites": [
+                        {
+                            "species": [
+                                {
+                                    "element": "Pt",
+                                    "occu": 1.0
+                                }
+                            ],
+                            "abc": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "xyz": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "label": "Pt",
+                            "properties": {}
+                        }
+                    ]
+                },
+                "vasp_input_set": {
+                    "@module": "src.dft_settings",
+                    "@class": "TheoreticalLevelSet",
+                    "@version": null,
+                    "structure": {
+                        "@module": "pymatgen.core.structure",
+                        "@class": "Structure",
+                        "charge": null,
+                        "lattice": {
+                            "matrix": [
+                                [
+                                    2.4025207811323877,
+                                    0.0,
+                                    1.3870960208386385
+                                ],
+                                [
+                                    0.8008402611844416,
+                                    2.265118313727989,
+                                    1.387096022515914
+                                ],
+                                [
+                                    0.0,
+                                    0.0,
+                                    2.77419203
+                                ]
+                            ],
+                            "a": 2.77419204,
+                            "b": 2.77419204,
+                            "c": 2.77419203,
+                            "alpha": 59.99999994,
+                            "beta": 59.99999997999999,
+                            "gamma": 59.99999995000001,
+                            "volume": 15.097135884015637
+                        },
+                        "sites": [
+                            {
+                                "species": [
+                                    {
+                                        "element": "Pt",
+                                        "occu": 1.0
+                                    }
+                                ],
+                                "abc": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "xyz": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "label": "Pt",
+                                "properties": {}
+                            }
+                        ]
+                    },
+                    "psp_version": "PBE_54",
+                    "bulk": true,
+                    "user_incar_settings": {
+                        "ENCUT": 360.0,
+                        "NSW": 0
+                    }
+                },
+                "_fw_name": "{{atomate.vasp.firetasks.write_inputs.WriteVaspFromIOSet}}"
+            },
+            {
+                "vasp_cmd": ">>vasp_cmd<<",
+                "job_type": "normal",
+                "max_force_threshold": null,
+                "ediffg": null,
+                "auto_npar": ">>auto_npar<<",
+                "half_kpts_first_relax": false,
+                "_fw_name": "{{atomate.vasp.firetasks.run_calc.RunVaspCustodian}}"
+            },
+            {
+                "name": "Static-360-4",
+                "_fw_name": "{{atomate.common.firetasks.glue_tasks.PassCalcLocs}}"
+            },
+            {
+                "db_file": ">>db_file<<",
+                "additional_fields": {
+                    "task_label": "Static-360-4"
+                },
+                "_fw_name": "{{atomate.vasp.firetasks.parse_outputs.VaspToDb}}"
+            }
+        ],
+        "calc_locs": [
+            {
+                "name": "Static-280-0",
+                "filesystem": null,
+                "path": "/home/jovyan/launcher_2022-05-11-17-35-14-085175"
+            },
+            {
+                "name": "Static-300-1",
+                "filesystem": null,
+                "path": "/home/jovyan/launcher_2022-05-11-17-35-36-634766"
+            },
+            {
+                "name": "Static-320-2",
+                "filesystem": null,
+                "path": "/home/jovyan/launcher_2022-05-11-17-35-59-158541"
+            },
+            {
+                "name": "Static-340-3",
+                "filesystem": null,
+                "path": "/home/jovyan/launcher_2022-05-11-17-36-21-568667"
+            }
+        ]
+    },
+    "fw_id": 9,
+    "created_on": "2022-05-11T17:35:14.023261",
+    "updated_on": "2022-05-11T17:36:44.467577",
+    "launches": [
+        {
+            "fworker": {
+                "name": "atomate_stack",
+                "category": "",
+                "query": "{}",
+                "env": {
+                    "db_file": "/home/jovyan/atomate/config/db.json",
+                    "vasp_cmd": "mpirun -np 16 --map-by hwthread /opt/vasp.6.2.0_pgi_mkl/bin/vasp_std",
+                    "scratch_dir": "/scratch"
+                }
+            },
+            "fw_id": 9,
+            "launch_dir": "/home/jovyan/launcher_2022-05-11-17-36-44-456325",
+            "host": "fireworks-tutorial-0",
+            "ip": "10.42.8.74",
+            "trackers": [],
+            "action": null,
+            "state": "RUNNING",
+            "state_history": [
+                {
+                    "state": "RUNNING",
+                    "created_on": "2022-05-11T17:36:44.466514",
+                    "updated_on": "2022-05-11T17:36:44.466519"
+                }
+            ],
+            "launch_id": 5
+        }
+    ],
+    "state": "RUNNING",
+    "name": "Pt-Static-360-4"
+}
