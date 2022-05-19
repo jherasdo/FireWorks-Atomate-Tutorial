@@ -2,24 +2,20 @@
 
 **:warning: WARNING:** This tutorial does not provide any licensed code or file.
 
-___
-
 ## Introduction
+[FireWorks](https://materialsproject.github.io/fireworks/) is a free, open-source code for defining, managing, and executing scientific workflows. It can be used to automate calculations over arbitrary computing resources, including those that have a queueing system.
 
+[Atomate](https://atomate.org) makes it possible to perform complex materials science computations using very straightforward statements.
+
+[Pymatge](https://pymatgen.org) is a robust, open-source Python library for materials analysis.
 
 ## Content
 
-- `fireworks_tutorial.ipynb`: Basic FireWorks tutorial.
+- `fireworks_https://materialsproject.github.io/fireworks/tutorial.ipynb`: Basic FireWorks tutorial.
 
-- `fireworks_tutorial_vasp.ipynb`: FireWorks/Atomate tutorial for materials science (VASP).
+- `fireworks_https://materialsproject.github.io/fireworks/tutorial_vasp.ipynb`: FireWorks/Atomate tutorial for materials science (VASP).
 
-- `fireworks_tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
-
-## Acknowledgements
-
-- [FireWorks](https://materialsproject.github.io/fireworks/)
-- [Atomate](https://atomate.org/)
-- [Pymatgen](https://pymatgen.org)
+- `fireworks_https://materialsproject.github.io/fireworks/tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
 
 ## Citation
 
