@@ -7,7 +7,7 @@
 
 [Atomate](https://atomate.org) makes it possible to perform complex materials science computations using very straightforward statements.
 
-[Pymatge](https://pymatgen.org) is a robust, open-source Python library for materials analysis.
+[Pymatgen](https://pymatgen.org) is a robust, open-source Python library for materials analysis.
 
 ## Content
 
