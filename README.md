@@ -7,11 +7,17 @@
 
 ## Content
 
-- `fireworks_tutorial.ipynb`: Basic FireWorks tutorial. [(source)](https://materialsproject.github.io/fireworks/)
+- `fireworks_tutorial.ipynb`: Basic FireWorks tutorial.
 
 - `fireworks_tutorial_vasp.ipynb`: FireWorks/Atomate tutorial for materials science (VASP).
 
 - `fireworks_tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
+
+## Acknowledgements
+
+- [FireWorks](https://materialsproject.github.io/fireworks/)
+- [Atomate](https://atomate.org/)
+- [Pymatgen](https://pymatgen.org)
 
 ## Citation
 
