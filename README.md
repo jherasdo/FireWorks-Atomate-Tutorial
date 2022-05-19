@@ -11,11 +11,11 @@
 
 ## Content
 
-- `fireworks_https://materialsproject.github.io/fireworks/tutorial.ipynb`: Basic FireWorks tutorial.
+- `fireworks_tutorial.ipynb`: Basic introduction to FireWorks with simple examples from their documentation.
 
-- `fireworks_https://materialsproject.github.io/fireworks/tutorial_vasp.ipynb`: FireWorks/Atomate tutorial for materials science (VASP).
+- `fireworks_tutorial_vasp.ipynb`: FireWorks/Atomate tutorial for materials science (VASP).
 
-- `fireworks_https://materialsproject.github.io/fireworks/tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
+- `fireworks_tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
 
 ## Citation
 
