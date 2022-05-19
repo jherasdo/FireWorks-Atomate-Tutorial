@@ -1,4 +1,6 @@
-# FireWorks/Atomate Tutorial
+<h1 align="center">FireWorks/Atomate Tutorial</h1>
+
+**WARNING:** This tutorial does not provide any licensed code or file.
 
 ## Content
 
@@ -6,3 +8,6 @@
 - `fireworks_tutorial_vasp.ipynb`: FireWorks/Atomate tutorial for materials science (VASP).
 - `fireworks_tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
 
+## Citation
+
+There is not citation! Feel free to fork (:fork_and_knife:) and leave a start (:star:)
