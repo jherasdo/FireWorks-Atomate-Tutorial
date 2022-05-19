@@ -1,6 +1,6 @@
 <h1 align="center">FireWorks/Atomate Tutorial</h1>
 
-**WARNING:** This tutorial does not provide any licensed code or file.
+**:warning: WARNING:** This tutorial does not provide any licensed code or file.
 
 ## Content
 
