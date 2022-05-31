@@ -17,6 +17,12 @@
 
 - `fireworks_tutorial_fakevasp.ipynb`: Same tutorial but using RunFakeVasp (FireTask) instead of VASP code.
 
+- `src/analysis.py`: Custome analysis firetasks (e.g `PlotEncutCalib`, `FitEOSTask`, etc.)
+
+- `src/dft_settings.py`: General DFT settings for the tutorial.
+
+- `src/reference_dirs.py`: Directories for FakeVasp and custome Fireworks `OptimizeFakeFW` and `TransmutterFakeFW`.
+
 ## Citation
 
 There is no citation! Feel free to fork (:fork_and_knife:) and leave a start (:star:)
