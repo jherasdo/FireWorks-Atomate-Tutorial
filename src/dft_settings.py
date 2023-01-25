@@ -21,7 +21,7 @@ class TheoreticalLevelSet(MVLSlabSet):
         # Change the default PBE version from PMG
         psp_versions = ["PBE", "PBE_52", "PBE_54"]
         assert self.psp_version in psp_versions
-        self.potcat_functional = "PBE_54"
+        self.potcar_functional = "PBE_54"
         
     @property
     def incar(self):
